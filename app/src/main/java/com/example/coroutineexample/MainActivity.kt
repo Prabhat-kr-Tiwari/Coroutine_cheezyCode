@@ -9,7 +9,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "PRABHAT"
@@ -23,15 +25,15 @@ class MainActivity : AppCompatActivity() {
         button = findViewById(R.id.button)
         buttonexecuteTask = findViewById(R.id.btn_execute_task)
         Log.d(TAG, "onCreate: ${Thread.currentThread().name}")
-        button.setOnClickListener {
+      /*  button.setOnClickListener {
             Log.d(TAG, "onCreate: BUTTON CLICK ${Thread.currentThread().name}")
             updateCounter()
         }
         buttonexecuteTask.setOnClickListener {
-            /* thread(start = true) {
+            *//* thread(start = true) {
 
                  executeLongRunningTask()
-             }*/
+             }*//*
             //coroutine
             CoroutineScope(Dispatchers.IO).launch {
                 Log.d(TAG, "onCreate: CoroutineScope(Dispatchers.IO)-> ${Thread.currentThread().name}")
@@ -47,19 +49,44 @@ class MainActivity : AppCompatActivity() {
 
             }
 
+        }*/
+
+
+        //suspend function and modifier
+        CoroutineScope(Dispatchers.Main).launch {
+            task1()
+
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+
+            task2()
         }
 
 
+
     }
 
-    fun updateCounter() {
+/*    fun updateCounter() {
         textView.text = "${textView.text.toString().toInt() + 1}"
 
     }
-
     private fun executeLongRunningTask() {
         for (i in 1..1000000000L) {
 
         }
+    }*/
+
+    suspend fun task1(){
+        Log.d(TAG, "START task1: ")
+//        yield()
+        delay(1000)
+        Log.d(TAG, "END task1: ")
+    }
+
+    suspend fun task2(){
+        Log.d(TAG, "START task2: ")
+//        yield()
+        delay(2000)
+        Log.d(TAG, "END task2: ")
     }
 }
